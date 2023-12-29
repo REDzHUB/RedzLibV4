@@ -1,1 +1,21 @@
+local Themes = {
+  ["Dark"] = {
+    ["Color Hub 1"] = Color3.fromRGB(5, 5, 5),
+    ["Color Hub 2"] = Color3.fromRGB(20, 20, 20),
+    ["Color Theme"] = Color3.fromRGB(30, 180, 30),
+    ["Color Text"] = Color3.fromRGB(220, 220, 220),
+    ["Color Dark Text"] = Color3.fromRGB(180, 180, 180),
+    ["Color Stroke"] = Color3.fromRGB(60, 60, 60),
+    ["Corner Radius"] = UDim.new(0, 6),
+    ["Font"] = {
+      Enum.Font.GothamBlack,
+      Enum.Font.GothamBold,
+      Enum.Font.GothamMedium
+    },
+    ["Transparency"] = 0,
+    ["Stroke Thickness"] = 1,
+    ["Tween Style"] = Enum.EasingStyle.Sine
+  }
+}
 
+return Themes
