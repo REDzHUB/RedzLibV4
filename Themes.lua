@@ -12,7 +12,6 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
@@ -29,7 +28,6 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
@@ -46,7 +44,6 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
@@ -63,7 +60,6 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
@@ -80,7 +76,6 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
@@ -97,7 +92,6 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
@@ -114,7 +108,6 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
@@ -131,7 +124,6 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
@@ -148,7 +140,6 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
@@ -165,7 +156,6 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
@@ -182,7 +172,6 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
@@ -199,11 +188,10 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
-  ["New Discord Dark"] = {
+  ["Discord"] = {
     ["Color Hub 1"] = Color3.fromRGB(32, 34, 37),
     ["Color Hub 2"] = Color3.fromRGB(47, 49, 54),
     ["Color Theme"] = Color3.fromRGB(114, 137, 218),
@@ -216,24 +204,6 @@ local Themes = {
       Enum.Font.GothamBold,
       Enum.Font.GothamMedium
     },
-    ["Transparency"] = 0.1,
-    ["Stroke Thickness"] = 1,
-    ["Tween Style"] = Enum.EasingStyle.Sine
-  },
-  ["New Discord Light"] = {
-    ["Color Hub 1"] = Color3.fromRGB(245, 246, 250),
-    ["Color Hub 2"] = Color3.fromRGB(235, 236, 240),
-    ["Color Theme"] = Color3.fromRGB(114, 137, 218),
-    ["Color Text"] = Color3.fromRGB(44, 47, 51),
-    ["Color Dark Text"] = Color3.fromRGB(94, 97, 101),
-    ["Color Stroke"] = Color3.fromRGB(225, 226, 230),
-    ["Corner Radius"] = UDim.new(0, 6),
-    ["Font"] = {
-      Enum.Font.GothamBlack,
-      Enum.Font.GothamBold,
-      Enum.Font.GothamMedium
-    },
-    ["Transparency"] = 0.1,
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   }
