@@ -159,13 +159,13 @@ local Themes = {
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
-  ["Monokai"] = {
-    ["Color Hub 1"] = Color3.fromRGB(39, 40, 34),
-    ["Color Hub 2"] = Color3.fromRGB(49, 50, 44),
-    ["Color Theme"] = Color3.fromRGB(253, 151, 31),
-    ["Color Text"] = Color3.fromRGB(248, 248, 242),
-    ["Color Dark Text"] = Color3.fromRGB(208, 208, 202),
-    ["Color Stroke"] = Color3.fromRGB(59, 60, 54),
+  ["Dark Red"] = {
+    ["Color Hub 1"] = Color3.fromRGB(10, 0, 0),
+    ["Color Hub 2"] = Color3.fromRGB(25, 15, 15),
+    ["Color Theme"] = Color3.fromRGB(150, 0, 0),
+    ["Color Text"] = Color3.fromRGB(230, 210, 210),
+    ["Color Dark Text"] = Color3.fromRGB(190, 170, 170),
+    ["Color Stroke"] = Color3.fromRGB(70, 50, 50),
     ["Corner Radius"] = UDim.new(0, 6),
     ["Font"] = {
       Enum.Font.GothamBlack,
