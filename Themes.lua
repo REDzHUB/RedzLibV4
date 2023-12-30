@@ -67,23 +67,6 @@ local Themes = {
     ["Stroke Thickness"] = 1,
     ["Tween Style"] = Enum.EasingStyle.Sine
   },
-  ["Forest Green"] = {
-    ["Color Hub 1"] = Color3.fromRGB(0, 50, 0),
-    ["Color Hub 2"] = Color3.fromRGB(0, 80, 0),
-    ["Color Theme"] = Color3.fromRGB(0, 120, 0),
-    ["Color Text"] = Color3.fromRGB(200, 255, 200),
-    ["Color Dark Text"] = Color3.fromRGB(150, 200, 150),
-    ["Color Stroke"] = Color3.fromRGB(50, 100, 50),
-    ["Corner Radius"] = UDim.new(0, 6),
-    ["Font"] = {
-      Enum.Font.GothamBlack,
-      Enum.Font.GothamBold,
-      Enum.Font.GothamMedium
-    },
-    ["Transparency"] = 0.1,
-    ["Stroke Thickness"] = 1,
-    ["Tween Style"] = Enum.EasingStyle.Sine
-  },
   ["Crimson Red"] = {
     ["Color Hub 1"] = Color3.fromRGB(100, 0, 0),
     ["Color Hub 2"] = Color3.fromRGB(150, 0, 0),
@@ -176,6 +159,74 @@ local Themes = {
     ["Color Text"] = Color3.fromRGB(210, 230, 210),
     ["Color Dark Text"] = Color3.fromRGB(170, 190, 170),
     ["Color Stroke"] = Color3.fromRGB(50, 70, 50),
+    ["Corner Radius"] = UDim.new(0, 6),
+    ["Font"] = {
+      Enum.Font.GothamBlack,
+      Enum.Font.GothamBold,
+      Enum.Font.GothamMedium
+    },
+    ["Transparency"] = 0.1,
+    ["Stroke Thickness"] = 1,
+    ["Tween Style"] = Enum.EasingStyle.Sine
+  },
+  ["Monokai"] = {
+    ["Color Hub 1"] = Color3.fromRGB(39, 40, 34),
+    ["Color Hub 2"] = Color3.fromRGB(49, 50, 44),
+    ["Color Theme"] = Color3.fromRGB(253, 151, 31),
+    ["Color Text"] = Color3.fromRGB(248, 248, 242),
+    ["Color Dark Text"] = Color3.fromRGB(208, 208, 202),
+    ["Color Stroke"] = Color3.fromRGB(59, 60, 54),
+    ["Corner Radius"] = UDim.new(0, 6),
+    ["Font"] = {
+      Enum.Font.GothamBlack,
+      Enum.Font.GothamBold,
+      Enum.Font.GothamMedium
+    },
+    ["Transparency"] = 0.1,
+    ["Stroke Thickness"] = 1,
+    ["Tween Style"] = Enum.EasingStyle.Sine
+  },
+  ["Monokai"] = {
+    ["Color Hub 1"] = Color3.fromRGB(39, 40, 34),
+    ["Color Hub 2"] = Color3.fromRGB(49, 50, 44),
+    ["Color Theme"] = Color3.fromRGB(253, 151, 31),
+    ["Color Text"] = Color3.fromRGB(248, 248, 242),
+    ["Color Dark Text"] = Color3.fromRGB(208, 208, 202),
+    ["Color Stroke"] = Color3.fromRGB(59, 60, 54),
+    ["Corner Radius"] = UDim.new(0, 6),
+    ["Font"] = {
+      Enum.Font.GothamBlack,
+      Enum.Font.GothamBold,
+      Enum.Font.GothamMedium
+    },
+    ["Transparency"] = 0.1,
+    ["Stroke Thickness"] = 1,
+    ["Tween Style"] = Enum.EasingStyle.Sine
+  },
+  ["New Discord Dark"] = {
+    ["Color Hub 1"] = Color3.fromRGB(32, 34, 37),
+    ["Color Hub 2"] = Color3.fromRGB(47, 49, 54),
+    ["Color Theme"] = Color3.fromRGB(114, 137, 218),
+    ["Color Text"] = Color3.fromRGB(222, 222, 222),
+    ["Color Dark Text"] = Color3.fromRGB(153, 170, 181),
+    ["Color Stroke"] = Color3.fromRGB(54, 57, 63),
+    ["Corner Radius"] = UDim.new(0, 6),
+    ["Font"] = {
+      Enum.Font.GothamBlack,
+      Enum.Font.GothamBold,
+      Enum.Font.GothamMedium
+    },
+    ["Transparency"] = 0.1,
+    ["Stroke Thickness"] = 1,
+    ["Tween Style"] = Enum.EasingStyle.Sine
+  },
+  ["New Discord Light"] = {
+    ["Color Hub 1"] = Color3.fromRGB(245, 246, 250),
+    ["Color Hub 2"] = Color3.fromRGB(235, 236, 240),
+    ["Color Theme"] = Color3.fromRGB(114, 137, 218),
+    ["Color Text"] = Color3.fromRGB(44, 47, 51),
+    ["Color Dark Text"] = Color3.fromRGB(94, 97, 101),
+    ["Color Stroke"] = Color3.fromRGB(225, 226, 230),
     ["Corner Radius"] = UDim.new(0, 6),
     ["Font"] = {
       Enum.Font.GothamBlack,
