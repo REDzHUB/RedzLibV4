@@ -856,7 +856,7 @@ function redzLib:MakeWindow(Configs)
     end
     function Tab:AddLabel(Configs)
       local Type = Configs[1] or Configs.Type or "Text"
-      local NameI = Configs[2] or Configs.Name or "Section!!"
+      local NameI = Configs[2] or Configs.Name or "This is a " ..  Type .. " Label"
       local ImageI = Configs[3] or Configs.Image or "rbxassetid://"
       
       local Frame = Button(Container, {
@@ -870,7 +870,7 @@ function redzLib:MakeWindow(Configs)
         Frame.Size = UDim2.new(1, 0, 0, 160)
         Bagulho1 = insertTheme(Create("TextLabel", Frame, {
           Font = Theme["Font"][2],
-          Text = BName,
+          Text = NameI,
           TextSize = 13,
           Size = UDim2.new(1, -25, 0, 25),
           Position = UDim2.new(0, 15, 0, 0),
@@ -889,7 +889,7 @@ function redzLib:MakeWindow(Configs)
       else
         Bagulho1 = insertTheme(Create("TextLabel", Frame, {
           Font = Theme["Font"][2],
-          Text = BName,
+          Text = NameI,
           TextSize = 13,
           Size = UDim2.new(1, -25, 1, 0),
           Position = UDim2.new(0, 15, 0, 0),
@@ -1599,18 +1599,11 @@ function redzLib:MakeWindow(Configs)
       if Save and typeof(Save) == "string" and FindTable(redzLib.Save.Flags, Save) then
         Default = redzLib.Save.Flags[Save]
       end
-      
-      local Frame = Button(Container, {
-        Size = UDim2.new(1, 0, 0, 25),
-      }, {
-        Corner()
-      })
-      
+      local Frame = Button(Container, {Size = UDim2.new(1, 0, 0, 25)}, {Corner()})
       local MainContainer = Create("Frame", Frame, {
         Size = UDim2.new(1, 0, 0, 25),
         BackgroundTransparency = 1
       })
-      
       local Text = insertTheme(Create("TextLabel", MainContainer, {
         Font = Theme["Font"][2],
         Text = DName,
@@ -1622,7 +1615,6 @@ function redzLib:MakeWindow(Configs)
         TextXAlignment = "Left",
         TextTruncate = "AtEnd"
       }), "Text")
-      
       local TextLabel2 = insertTheme(Create("TextLabel", MainContainer, {
         Size = UDim2.new(0.45, -18, 0, 20),
         AnchorPoint = Vector2.new(1, 0.5),
@@ -1632,10 +1624,7 @@ function redzLib:MakeWindow(Configs)
         Font = Theme["Font"][2],
         TextScaled = true,
         Text = "..."
-      }, {
-        Corner()
-      }), "Text")
-      
+      }, {Corner()}), "Text")
       local Arrow = insertTheme(Create("ImageLabel", TextLabel2, {
         Size = UDim2.new(0, 16, 0, 16),
         Position = UDim2.new(0, -5, 0.5, 0),
@@ -1645,7 +1634,6 @@ function redzLib:MakeWindow(Configs)
         Rotation = 180,
         ImageColor3 = Theme["Color Stroke"]
       }), "Stroke")
-      
       local ContainerList = Create("ScrollingFrame", Frame, {
         Size = UDim2.new(1, 0, 1, -25),
         Position = UDim2.new(0, 0, 0, 25),
@@ -1677,7 +1665,6 @@ function redzLib:MakeWindow(Configs)
           SaveSenttigs("redz library V4.lua", redzLib.Save)
         end
       end
-      
       local function Void()
         table.foreach(ContainerList:GetChildren(), function(a, b)
           if b:IsA("TextButton") then
@@ -1688,7 +1675,6 @@ function redzLib:MakeWindow(Configs)
         SelectedOptionT = {}
         OptionsC = {}
       end
-      
       local function SetLabelTable()
         local str, first = ""
         table.foreach(SelectedOptionT, function(a, b)
@@ -1700,7 +1686,6 @@ function redzLib:MakeWindow(Configs)
         end)
         TextLabel2.Text = str
       end
-      
       local function RemoveOption(name)
         local Option = ContainerList:FindFirstChild(name)
         if Option then
@@ -1712,7 +1697,6 @@ function redzLib:MakeWindow(Configs)
           end)
         end
       end
-      
       local function AddOption(val, void)
         local function CreateButton(name)
           table.insert(OptionsC, name)
@@ -1774,7 +1758,6 @@ function redzLib:MakeWindow(Configs)
             SaveDropdown()
           end)
         end
-        
         local function CreateToggle(name)
           table.insert(OptionsC, name)
           local Frame = Create("TextButton", ContainerList, {
@@ -1862,7 +1845,6 @@ function redzLib:MakeWindow(Configs)
               end
             end
           end)
-        else
         end
       end;AddOption(Options, true)
       
