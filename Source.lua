@@ -34,7 +34,7 @@ local CoreGui = game:GetService("CoreGui")
 local Player = Players.LocalPlayer
 
 local function GetIcon(GetName)
-  if #GetName:split("") < 1 then return end
+  if #GetName:split("") < 1 then return GetName end
   
   for iconName,rbxassetid in pairs(redzLib.Icons) do
     local Name1 = GetName:lower():gsub("lucide", ""):gsub("-", "")
