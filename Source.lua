@@ -34,6 +34,8 @@ local CoreGui = game:GetService("CoreGui")
 local Player = Players.LocalPlayer
 
 local function GetIcon(GetName)
+  if #GetName:split("") < 1 then return end
+  
   for iconName,rbxassetid in pairs(redzLib.Icons) do
     local Name1 = GetName:lower():gsub("lucide", ""):gsub("-", "")
     local Name2 = iconName:lower():gsub("lucide", ""):gsub("-", "")
@@ -2144,3 +2146,116 @@ function redzLib:MakeWindow(Configs)
 end
 
 return redzLib
+--[[local Window = redzLib:MakeWindow({"redz Library"})
+Window:AddMinimizeButton({
+  Button = {
+    Image = redzLib:GetIcon("Sword")
+  },
+  UICorner = {true,
+    CornerRadius = UDim.new(0.5, 0)
+  },
+  UIStroke = {false}
+})
+
+local Exemplo = Window:MakeTab({"Com Interação", "image"})
+local Decorar = Window:MakeTab({"Sem Intenção"})
+
+local Section = Exemplo:AddSection("Button & Dialog")
+
+Exemplo:AddButton({
+  Name = "Dialog",
+  Callback = function(Value)
+    Section:Set(Value)
+    Window.Dialog:Create({
+      Title = "Set Theme 'Dark'?",
+      Confirm = {
+        Text = "Close",
+        Callback = function()
+          Window.Dialog:Wait()
+          redzLib:SetTheme("Dark")
+        end
+      },
+      Cancel = {
+        Cancel = "Cancel"
+      }
+    })
+  end
+})
+
+Exemplo:AddButton({
+  Name = "Notification",
+  Callback = function(Value)
+    Section:Set(Value)
+    redzLib:MakeNotify({
+      Title = "redz Library",
+      Text = "this is a notification",
+      Time = 5
+    })
+  end
+})
+
+local Section = Exemplo:AddSection("configs")
+
+local t1 = Exemplo:AddToggle({
+  Name = "Toggle 1",
+  Save = "Toggle 1",
+  Callback = function(Value)
+    Section:Set("Toggle : " .. tostring(Value))
+  end
+})
+
+local Section = Exemplo:AddSection("Slider")
+
+Exemplo:AddSlider({
+  Name = "Slider Exemplo",
+  MinValue = 0,
+  MaxValue = 10,
+  Default = 6,
+  Increase = 2,
+  Save = "Slider 1",
+  Callback = function(Value)
+    Section:Set("Slider : " .. tostring(Value))
+  end
+})
+
+Exemplo:AddSlider({
+  Name = "Slider Exemplo",
+  MinValue = 0,
+  MaxValue = 0.5,
+  Default = 0.1,
+  Increase = 0.01,
+  Save = "Slider 2",
+  Callback = function(Value)
+    Window:Set(Value)
+  end
+})
+
+Exemplo:AddSection({"Dropdown"})
+
+local dropdown = Exemplo:AddDropdown({
+  Name = "Apenas para testar",
+  Options = redzLib:GetThemes(),
+  Default = {"Melee"},
+  Save = "Farm Tool",
+  Callback = function(Value)
+    redzLib:SetTheme(Value)
+  end
+})
+
+Exemplo:AddTextBox({
+  Name = "Text Blocolis",
+  Default = "Selecionar Tema",
+  PlaceholderText = "input",
+  ClearText = false,
+  Callback = function(Value)
+    dropdown:Set(Value)
+  end
+})
+
+
+
+Decorar:AddSection("Seção exemplo")
+Decorar:AddParagraph("Paragrafo", "Exemplo")
+Decorar:AddLabel({"Image"})
+Decorar:AddLabel({"Text"})
+Decorar:AddDiscordInvite({"https://discord.gg/7aR7kNVt4g", "rbxassetid://15298567397", "REDz Hub | Community"})]]
