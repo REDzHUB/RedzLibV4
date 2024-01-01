@@ -4,13 +4,6 @@
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/RedzLibV4/main/Source.lua"))()
 ```
 
-## Global
-```lua
-Instance:Destroy()
-
-Instance:Visible(false)
-```
-
 library functions
 ```lua
 Library:SetTheme("Theme Name") -- https://raw.githubusercontent.com/REDzHUB/RedzLibV4/main/Themes.lua
@@ -20,6 +13,13 @@ Library:SetTransparency(0.1) -- 0, 1
 Library:GetThemes() -- void, return = table
 
 Library:GetIcon("Icon Name")
+```
+
+## Global Functions
+```lua
+Instance:Destroy()
+
+Instance:Visible(false)
 ```
 
 ## Window
