@@ -1956,7 +1956,7 @@ function redzLib:MakeWindow(Configs)
         TextScaled = true,
         ClearTextOnFocus = ClearOnFocus,
         PlaceholderText = PHText,
-        Text = ""
+        Text = Default
       }, {
         Corner()
       }), "Text")
@@ -1992,7 +1992,7 @@ function redzLib:MakeWindow(Configs)
         SetBox(TextBox.Text)
         CreateTween({Pencil, "ImageColor3", Theme["Color Theme"], 0.5, true})
         CreateTween({Pencil, "ImageColor3", Theme["Color Stroke"], 0.5, true})
-      end)SetBox(Default)
+      end)
       
       local TextBoxF = {}
       
@@ -2000,9 +2000,7 @@ function redzLib:MakeWindow(Configs)
         if typeof(val1) == "function" then Callback = val1
         elseif typeof(val1) == "string" then SetBox(val1) end
       end
-      function TextBoxF:Callback(func)
-        table.insert(TextBoxCallback, func)
-      end
+      function TextBoxF:Callback(func)table.insert(TextBoxCallback, func)end
       function TextBoxF:Destroy()Frame:Destroy()end
       function TextBoxF:Visible(Bool)Frame.Visible = Value end
       return TextBoxF
@@ -2015,7 +2013,7 @@ function redzLib:MakeWindow(Configs)
       local Frame1 = Create("Frame", Container, {
         Size = UDim2.new(1, 0, 0, 110),
         BackgroundTransparency = 1
-      })
+      }) 
       
       local Frame2 = insertTheme(Create("Frame", Frame1, {
         Size = UDim2.new(1, 0, 0, 110 - 25),
@@ -2146,116 +2144,3 @@ function redzLib:MakeWindow(Configs)
 end
 
 return redzLib
---[[local Window = redzLib:MakeWindow({"redz Library"})
-Window:AddMinimizeButton({
-  Button = {
-    Image = redzLib:GetIcon("Sword")
-  },
-  UICorner = {true,
-    CornerRadius = UDim.new(0.5, 0)
-  },
-  UIStroke = {false}
-})
-
-local Exemplo = Window:MakeTab({"Com Interação", "image"})
-local Decorar = Window:MakeTab({"Sem Intenção"})
-
-local Section = Exemplo:AddSection("Button & Dialog")
-
-Exemplo:AddButton({
-  Name = "Dialog",
-  Callback = function(Value)
-    Section:Set(Value)
-    Window.Dialog:Create({
-      Title = "Set Theme 'Dark'?",
-      Confirm = {
-        Text = "Close",
-        Callback = function()
-          Window.Dialog:Wait()
-          redzLib:SetTheme("Dark")
-        end
-      },
-      Cancel = {
-        Cancel = "Cancel"
-      }
-    })
-  end
-})
-
-Exemplo:AddButton({
-  Name = "Notification",
-  Callback = function(Value)
-    Section:Set(Value)
-    redzLib:MakeNotify({
-      Title = "redz Library",
-      Text = "this is a notification",
-      Time = 5
-    })
-  end
-})
-
-local Section = Exemplo:AddSection("configs")
-
-local t1 = Exemplo:AddToggle({
-  Name = "Toggle 1",
-  Save = "Toggle 1",
-  Callback = function(Value)
-    Section:Set("Toggle : " .. tostring(Value))
-  end
-})
-
-local Section = Exemplo:AddSection("Slider")
-
-Exemplo:AddSlider({
-  Name = "Slider Exemplo",
-  MinValue = 0,
-  MaxValue = 10,
-  Default = 6,
-  Increase = 2,
-  Save = "Slider 1",
-  Callback = function(Value)
-    Section:Set("Slider : " .. tostring(Value))
-  end
-})
-
-Exemplo:AddSlider({
-  Name = "Slider Exemplo",
-  MinValue = 0,
-  MaxValue = 0.5,
-  Default = 0.1,
-  Increase = 0.01,
-  Save = "Slider 2",
-  Callback = function(Value)
-    Window:Set(Value)
-  end
-})
-
-Exemplo:AddSection({"Dropdown"})
-
-local dropdown = Exemplo:AddDropdown({
-  Name = "Apenas para testar",
-  Options = redzLib:GetThemes(),
-  Default = {"Melee"},
-  Save = "Farm Tool",
-  Callback = function(Value)
-    redzLib:SetTheme(Value)
-  end
-})
-
-Exemplo:AddTextBox({
-  Name = "Text Blocolis",
-  Default = "Selecionar Tema",
-  PlaceholderText = "input",
-  ClearText = false,
-  Callback = function(Value)
-    dropdown:Set(Value)
-  end
-})
-
-
-
-Decorar:AddSection("Seção exemplo")
-Decorar:AddParagraph("Paragrafo", "Exemplo")
-Decorar:AddLabel({"Image"})
-Decorar:AddLabel({"Text"})
-Decorar:AddDiscordInvite({"https://discord.gg/7aR7kNVt4g", "rbxassetid://15298567397", "REDz Hub | Community"})]]
