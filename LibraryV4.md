@@ -49,17 +49,6 @@ local Notify = Library:MakeNotify({
 ## Tab
 Create a Tab
 ```lua
-local Tab = Window:MakeTab({"Tab", "Home"})
-
---[[
-  Tab:Destroy()
-  
-  Tab:Visible(false)
-  
-  Tab:Set("New Icon or Name")
-]]
-```
-```lua
 local Tab = Window:MakeTab({
   Name = "Tab",
   Icon = "Home"
@@ -77,6 +66,25 @@ local Section = Tab:AddSection({"This is a Section"})
 
 --[[
   Section:Set("Section")
+]]
+```
+
+## Label
+Create a Text Label
+```lua
+local TextLabel = Tab:AddLabel({"Text", "This is a Text Label"})
+
+--[[
+  TextLabel:Set("New Name")
+]]
+```
+
+Create a Image Label
+```lua
+local ImageLabel = Tab:AddLabel({"Image", "This is a Image Label", "rbxassetid://"})
+
+--[[
+  ImageLabel:Set("New Name", "New Image")
 ]]
 ```
 
@@ -136,4 +144,14 @@ local Toggle = Tab:AddToggle({
   
   end)
 ]]
+```
+
+## Extra
+Create a Discord Invite
+```lua
+Tab:AddDiscordInvite({
+  DiscordTitle = "REDz Hub | Community",
+  DiscordIcon = "rbxassetid://15298567397",
+  DiscordLink = "https://discord.gg/7aR7kNVt4g"
+})
 ```
