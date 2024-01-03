@@ -49,10 +49,7 @@ local Notify = Library:MakeNotify({
 ## Tab
 Create a Tab
 ```lua
-local Tab = Window:MakeTab({
-  Name = "Tab",
-  Icon = "Home"
-})
+local Tab = Window:MakeTab({Name = "Tab", Icon = "Home"})
 
 --[[
   Tab:Set("New Icon or Name")
@@ -66,6 +63,18 @@ local Section = Tab:AddSection({"This is a Section"})
 
 --[[
   Section:Set("Section")
+]]
+```
+
+## Paragraph
+Create a Paragraph
+```lua
+local Paragraph = Tab:AddParagraph({"Paragraph", "this is a Paragraph"})
+
+--[[
+  Paragraph:Set("New Text")
+  
+  Paragraph:Set("New Name", "New Text")
 ]]
 ```
 
@@ -103,12 +112,12 @@ local Button = Tab:AddButton({
     
   end)
   
-  Button:Set("New Name or Function")
+  Button:Set("New Name")
 ]]
 ```
 
 ## Toggle
-Create a Normal Toggle
+Create a Toggle
 ```lua
 local Toggle = Tab:AddToggle({
   Name = "Toggle",
@@ -119,29 +128,58 @@ local Toggle = Tab:AddToggle({
 })
 
 --[[
-  Toggle:Set("New Name or Value or Function")
+  Toggle:Set(false)
   
   Toggle:Callback(function(Value)
   
   end)
 ]]
 ```
-Create a Save Toggle
+
+## Dropdown
+Create a Dropdown
 ```lua
-local Toggle = Tab:AddToggle({
-  Name = "Toggle",
-  Default = false,
-  Save = "Toggle Example",
+local Dropdown = Tab:AddDropdown({
+  Name = "Dropdown",
+  Options = {"1", "2", "3"}
+  Default = {"2"}
+  MultSelect = false
   Callback = function(Value)
     
   end
 })
 
 --[[
-  Toggle:Set("New Name or Value or Function")
+  Dropdown:Set({New Options}, Void)
+  -- Example : {
+    Dropdown:Set({"one", "two", "three"}, true)
+  }
   
-  Toggle:Callback(function(Value)
+  Dropdown:Callback(function(Value)
+    
+  end)
+]]
+```
+
+## Slider
+Create a Slider
+```lua
+local Slider = Tab:AddSlider({
+  Name = "Slider",
+  MinValue = 1,
+  MaxValue = 10,
+  Default = 5,
+  Increase = 1,
+  Callback = function(Value)
+    
+  end
+})
+
+--[[
+  Slider:Set(7)
   
+  Slider:Callback(function(Value)
+    
   end)
 ]]
 ```
