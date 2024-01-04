@@ -359,11 +359,6 @@ task.spawn(function()
   end
 end)
 
--- Translate
-redzLib:Translate(New)
-
-
-
 -- Themes
 function redzLib:GetIcon(IconName)
   return GetIcon(IconName)
