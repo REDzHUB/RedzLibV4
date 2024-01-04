@@ -1,8 +1,22 @@
+local MarketplaceService = game:GetService("MarketplaceService")
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local CoreGui = game:GetService("CoreGui")
+local Player = Players.LocalPlayer
+
 local redzLib = {
-  Themes = --{},
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/RedzLibV4/main/Themes.lua"))(),
+  info = {
+    Version = "v1.2.0",
+    PlaceName = MarketplaceService:GetProductInfo(game.PlaceId).Name
+  },
+  Themes = loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/RedzLibV4/main/Themes.lua"))(),
+  SaveFlags = true,
+  SaveSettings = true,
+  Flags = {},
   Save = {
-    Flags = {},
     Theme = "Default",
     UISize = {550, 310},
     ScrollSize = 160,
@@ -24,14 +38,6 @@ local redzLib = {
     Toggle = {}
   }
 }
-
-local UserInputService = game:GetService("UserInputService")
-local TweenService = game:GetService("TweenService")
-local HttpService = game:GetService("HttpService")
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
-local CoreGui = game:GetService("CoreGui")
-local Player = Players.LocalPlayer
 
 local function GetIcon(GetName)
   if #GetName:split("") < 1 then return GetName end
@@ -104,11 +110,10 @@ local function LoadSettings(FileName)
   if readfile and isfile and isfile(FileName) then
     local decode = HttpService:JSONDecode(readfile(FileName))
     
-    if typeof(decode) == "table" then
+    if decode and typeof(decode) == "table" then
       if FindTable(decode, "ScrollSize") then redzLib.Save["ScrollSize"] = decode["ScrollSize"]end
       if FindTable(decode, "UISize") then redzLib.Save["UISize"] = decode["UISize"]end
       if FindTable(decode, "Theme") and VerifyTheme(decode["Theme"]) then redzLib.Save["Theme"] = decode["Theme"]end
-      if FindTable(decode, "Flags") then redzLib.Save["Flags"] = decode["Flags"]end
       if FindTable(decode, "TransparencyHub")then redzLib.Save["TransparencyHub"] = decode["TransparencyHub"]end
     end
   end
@@ -124,6 +129,7 @@ local function SaveSenttigs(FileName, save)
     writefile(FileName, json)
   end
 end
+
 local function CreateTween(Configs)
   local Instance = Configs[1] or Configs.Instance
   local Prop = Configs[2] or Configs.Prop
@@ -141,18 +147,19 @@ local function CreateTween(Configs)
 end
 local function MakeDrag(Instance)
 	task.spawn(function()
-		local dragStart, dragging, startPos
+		local DragStart, StartPos
+		
 		local function Update(Input)
-			local delta = Input.Position - dragStart
-			local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X / UIScale, startPos.Y.Scale, startPos.Y.Offset + delta.Y / UIScale)
+			local delta = Input.Position - DragStart
+			local Position = UDim2.new(StartPos.X.Scale, StartPos.X.Offset + delta.X / UIScale, StartPos.Y.Scale, StartPos.Y.Offset + delta.Y / UIScale)
 			Instance.Position = Position
 			-- CreateTween({Instance, "Position", Position, 0.1})
 		end
 		
     Instance.InputBegan:Connect(function(Input)
       if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
-        startPos = Instance.Position
-        dragStart = Input.Position
+        StartPos = Instance.Position
+        DragStart = Input.Position
         
         while UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton1) do RunService.Heartbeat:Wait()
           Update(Input)
@@ -243,7 +250,7 @@ task.spawn(function()
   
   function redzLib:MakeNotify(Configs)
     local NTitle = Configs[1] or Configs.Title or "Notification"
-    local NText = Configs[2] or Configs.Text or "This is a notification"
+    local NText = Configs[2] or Configs.Text or "This is a notification teste teste teste teste t3ste teste teste teste teste teste teste teste teste teste"
     local NTime = Configs[3] or Configs.Time or 5
     
     local NFrame = Create("Frame", NotifyContainer, {
@@ -306,7 +313,7 @@ task.spawn(function()
     })
     
     local NotifyTimer = insertTheme(Create("Frame", RealNFrame, {
-      Size = UDim2.new(1, 0, 0, 2),
+      Size = UDim2.new(1, 0, 0, 1.5),
       BackgroundColor3 = Theme["Color Stroke"],
       Position = UDim2.new(0, 2, 0, 20),
       BorderSizePixel = 0
@@ -334,7 +341,7 @@ task.spawn(function()
     task.spawn(function()
       CreateTween({RealNFrame, "Position", UDim2.new(0, -50), 0.5, true})
       CreateTween({RealNFrame, "Position", UDim2.new(0, 0), 0.15, true})
-      CreateTween({NotifyTimer, "Size", UDim2.new(0, 0, 0, 2), NTime, true})
+      CreateTween({NotifyTimer, "Size", UDim2.new(0, 0, 0, 1.5), NTime, true})
       if not destroy and not NotifyFinish and NFrame then
         NotifyFinish = true
         CreateTween({RealNFrame, "Position", UDim2.new(0, -50), 0.15, true})
@@ -351,6 +358,11 @@ task.spawn(function()
     return Notify
   end
 end)
+
+-- Translate
+redzLib:Translate(New)
+
+
 
 -- Themes
 function redzLib:GetIcon(IconName)
@@ -451,7 +463,65 @@ function redzLib:Visible(Bool)ScreenGui.Enabled = Bool end
 function redzLib:Destroy()SreenGui:Destroy()end
 function redzLib:MakeWindow(Configs)
   local Minimized, WaitMinimize, SavedSize
-  local WTitle = Configs[1] or Configs.Name or "redz library"
+  local WTitle = Configs[1] or Configs.Title or "redz library"
+  local SubTitle = Configs[2] or Configs.SubTitle or "by : redz9999"
+  local LoadTitle = Configs[3] or Configs.LoadText or SubTitle
+  local DefaultTheme = Configs[4] or Configs.DefaultTheme or false
+  local SaveCfg = Configs[5] or Configs.Flags or "redz Library v4 | Flags.lua"
+  local Flags = redzLib.Flags
+  
+  if DefaultTheme and typeof(DefaultTheme) == "string" and VerifyTheme(DefaultTheme) then
+    redzLib:SetTheme(DefaultTheme)
+  end
+  
+  local AnimFrame = insertTheme(Create("Frame", ScreenGui, {
+    Position = UDim2.fromScale(0.5, 0.5),
+    AnchorPoint = Vector2.new(0.5, 0.5),
+    BackgroundColor3 = Theme["Color Hub 1"],
+    ClipsDescendants = true
+  }, {
+    Corner()
+  }), "Frames")
+  
+  local AnimText = insertTheme(Create("TextLabel", AnimFrame, {
+    Size = UDim2.fromScale(1, 1),
+    BackgroundTransparency = 1,
+    Text = LoadTitle,
+    Font = Theme["Font"][2],
+    TextSize = 12,
+    TextColor3 = Theme["Color Text"],
+    TextTransparency = 1
+  }), "Text")
+  
+  CreateTween({AnimFrame, "Size", UDim2.fromOffset(0, 25), 0.2, true})
+  CreateTween({AnimFrame, "Size", UDim2.fromOffset(140, 25), 0.6, true})
+  CreateTween({AnimText, "TextTransparency", 0, 0.4, true})
+  task.wait(0.5)
+  CreateTween({AnimText, "TextTransparency", 0, 0.4, true})
+  CreateTween({AnimFrame, "Size", UDim2.fromOffset(0, 25), 0.4, true})
+  AnimText:Destroy()
+  AnimFrame:Destroy()
+  
+  local function SaveFile(Name, Value)
+    if redzLib.SaveFlags and SaveCfg and typeof(SaveCfg) == "string" then
+      Flags[Name] = Value
+      
+      local encode = HttpService:JSONEncode(Flags)
+      writefile(SaveCfg, encode)
+    end
+  end
+  
+  local function LoadFile()
+    if redzLib.SaveFlags and SaveCfg and typeof(SaveCfg) == "string" then
+      if readfile and isfile and isfile(SaveCfg) then
+        local decode = HttpService:JSONDecode(readfile(SaveCfg))
+        
+        if decode and typeof(decode) == "table" then
+          Flags = decode
+        end
+      end
+    end
+  end;LoadFile()
   
   local MainFrame = MakeDrag(insertTheme(Create("Frame", ScreenGui, {
     Size = UDim2.fromOffset(unpack(redzLib.Save.UISize)),
@@ -641,8 +711,20 @@ function redzLib:MakeWindow(Configs)
     Text = WTitle,
     BackgroundTransparency = 1,
     Position = UDim2.new(0, 20, 0, 0),
-    Size = UDim2.new(1, 0, 1, 0),
+    Size = UDim2.fromScale(0, 1),
+    AutomaticSize = "X",
     TextXAlignment = "Left"
+  }, {
+    insertTheme(Create("TextLabel", {
+      TextSize = 10,
+      Font = Theme["Font"][2],
+      TextColor3 = Theme["Color Dark Text"],
+      Position = UDim2.new(1, 5, 0, 2),
+      Text = SubTitle,
+      Size = UDim2.new(1, 0, 1, 0),
+      BackgroundTransparency = 1,
+      TextXAlignment = "Left"
+    }), "DarkText")
   }), "Text")
   
   local IsFirst
@@ -725,6 +807,7 @@ function redzLib:MakeWindow(Configs)
   function Window:MakeTab(Configs)
     local TName = Configs[1] or Configs.Name or "Tab"
     local TImage = Configs[2] or Configs.Icon or "rbxassetid://"
+    
     
     if not TImage:find("rbxassetid://") then
       TImage = GetIcon(TImage)
@@ -914,14 +997,10 @@ function redzLib:MakeWindow(Configs)
             if NewValue2 and string.find(NewValue2, "rbxassetid://") then
               Bagulho2.Image = NewValue2
             end
-          elseif typeof(NewValue1) == "Color3" then
-            Bagulho1.TextColor3 = NewValue1
           end
         else
           if typeof(NewValue1) == "string" then
             Bagulho1.Text = NewValue1
-          elseif typeof(NewValue1) == "Color3" then
-            Bagulho1.TextColor3 = NewValue1
           end
         end
       end
@@ -986,14 +1065,14 @@ function redzLib:MakeWindow(Configs)
     end
     function Tab:AddButton(Configs)
       local BName = Configs[1] or Configs.Name or "Button"
-      local Callback = Configs[2] or Configs.Callback or function()end
+      local Callback = Configs[3] or Configs.Callback or function()end
       
-      local Frame = Button(Container, {Size = UDim2.new(1, 0, 0, 25)})
+      local Frame = Button(Container, {Size = UDim2.new(1, 0, 0, 25), AutomaticSize = "Y"})
       local Text = insertTheme(Create("TextLabel", Frame, {
         Font = Theme["Font"][2],
         Text = BName,
         TextSize = 13,
-        Size = UDim2.new(1, -50, 1, 0),
+        Size = UDim2.new(1, -50, 0, 25),
         Position = UDim2.new(0, 15, 0, 0),
         BackgroundTransparency = 1,
         TextColor3 = Theme["Color Text"],
@@ -1041,14 +1120,10 @@ function redzLib:MakeWindow(Configs)
       local TName = Configs[1] or Configs.Name or "Toggle"
       local Default = Configs[2] or Configs.Default or false
       local Callback = Configs[3] or Configs.Callback or function()end
-      local Save = Configs[4] or Configs.Save or false
-      local ToggleCallback = {}
-      local ToggleTable = {}
+      local Flag = Configs[4] or Configs.Flag or false
+      local ToggleCallback, ToggleTable = {}, {}
       function ToggleTable:GetToggle()return Default end
-      
-      if Save and typeof(Save) == "string" and FindTable(redzLib.Save.Flags, Save) then
-        Default = redzLib.Save.Flags[Save]
-      end
+      if Flag and typeof(Flag) == "string" and FindTable(Flags, Flag) then Default = Flags[Flag]end
       
       local Frame = Button(Container, {Size = UDim2.new(1, 0, 0, 25)})
       local Text = insertTheme(Create("TextLabel", Frame, {
@@ -1087,9 +1162,8 @@ function redzLib:MakeWindow(Configs)
       }), ToggleTable}, "Toggle")
       
       local function SaveToggle()
-        if Save and typeof(Save) == "string" then
-          redzLib.Save.Flags[Save] = Default
-          SaveSenttigs("redz library V4.lua", redzLib.Save)
+        if Flag and typeof(Flag) == "string" then
+          SaveFile(Flag, Default)
         end
       end
       
@@ -1145,11 +1219,11 @@ function redzLib:MakeWindow(Configs)
       local Max = Configs[3] and Configs[3] / Increase or Configs.MaxValue and Configs.MaxValue / Increase or 100 / Increase
       local Default = Configs[4] or Configs.Default or 25
       local Callback = Configs[6] or Configs.Callback or function()end
-      local Save = Configs[7] or Configs.Save or false
+      local Save = Configs[7] or Configs.Flag or false
       local SliderCallback = {}
       
-      if Save and typeof(Save) == "string" and FindTable(redzLib.Save.Flags, Save) then
-        Default = redzLib.Save.Flags[Save]
+      if Save and typeof(Save) == "string" and FindTable(Flags, Save) then
+        Default = Flags[Save]
       end
       
       local Frame = Button(Container, {Size = UDim2.new(1, 0, 0, 25)})
@@ -1216,8 +1290,7 @@ function redzLib:MakeWindow(Configs)
       
       local function SaveSlider()
         if Save and typeof(Save) == "string" then
-          redzLib.Save.Flags[Save] = Default
-          SaveSenttigs("redz library V4.lua", redzLib.Save)
+          SaveFile(Save, Default)
         end
       end
       
@@ -1266,6 +1339,7 @@ function redzLib:MakeWindow(Configs)
 			
       local Slider = {}
       function Slider:Callback(func)
+        func(Default)
         table.insert(SliderCallback, func)
       end
       function Slider:Set(val1)
@@ -1275,15 +1349,15 @@ function redzLib:MakeWindow(Configs)
       end
       function Slider:Visible(Bool)Frame.Visible = Bool end
       function Slider:Destroy()Frame:Destroy()end
+      return Slider
     end
     function Tab:AddColorpicker(Configs)
       local CName = Configs[1] or Configs.Name or "Colorpicker"
       local DefaultColor = Configs[2] or Configs.Default or Color3.fromRGB(0, 120, 50)
       local Callback = Configs[3] or Configs.Callback or function()end
-      local Save = Configs[4] or Configs.Save or false
-      
-      if Save and typeof(Save) == "string" and FindTable(redzLib.Save.Flags, Save) then
-        DefaultColor = Color3.fromRGB(unpack(redzLib.Save.Flags[Save]))
+      local Save = Configs[4] or Configs.Flag or false
+      if Save and typeof(Save) == "string" and FindTable(Flags, Save) then
+        DefaultColor = Color3.fromRGB(unpack(Flags[Save]))
       end
       
       local ColorH, ColorS, ColorV = Color3.toHSV(DefaultColor)
@@ -1319,8 +1393,7 @@ function redzLib:MakeWindow(Configs)
             tonumber(str[3]) * 255
           }
           
-          redzLib.Save.Flags[Save] = Color
-          SaveSenttigs("redz library V4.lua", redzLib.Save)
+          SaveFile(Save, Color)
         end
       end
       
@@ -1594,10 +1667,10 @@ function redzLib:MakeWindow(Configs)
       local Default = Configs[3] or Configs.Default or {"2"}
       local MultSelect = Configs[4] or Configs.MultSelect or false
       local Callback = Configs[5] or Configs.Callback or function()end
-      local Save = Configs[6] or Configs.Save or false
+      local Save = Configs[6] or Configs.Flag or false
       
-      if Save and typeof(Save) == "string" and FindTable(redzLib.Save.Flags, Save) then
-        Default = redzLib.Save.Flags[Save]
+      if Save and typeof(Save) == "string" and FindTable(Flags, Save) then
+        Default = Flags[Save]
       end
       local Frame = Button(Container, {Size = UDim2.new(1, 0, 0, 25)}, {Corner()})
       local MainContainer = Create("Frame", Frame, {
@@ -1608,7 +1681,7 @@ function redzLib:MakeWindow(Configs)
         Font = Theme["Font"][2],
         Text = DName,
         TextSize = 13,
-        Size = UDim2.new(1, -50, 1, 0),
+        Size = UDim2.new(0.5, 0, 1, 0),
         Position = UDim2.new(0, 15, 0, 0),
         BackgroundTransparency = 1,
         TextColor3 = Theme["Color Text"],
@@ -1658,11 +1731,10 @@ function redzLib:MakeWindow(Configs)
       local function SaveDropdown()
         if Save and typeof(Save) == "string" then
           if MultSelect then
-            redzLib.Save.Flags[Save] = SelectedOptionT
+            SaveFile(Save, {SelectedOptionT})
           else
-            redzLib.Save.Flags[Save] = {SelectedOption}
+            SaveFile(Save, {SelectedOption})
           end
-          SaveSenttigs("redz library V4.lua", redzLib.Save)
         end
       end
       local function Void()
@@ -1870,13 +1942,13 @@ function redzLib:MakeWindow(Configs)
           
           WaitPress = true
           if not Minimized then
-            CreateTween({Arrow, "Rotation", 0, 0.6})
-            CreateTween({Arrow, "ImageColor3", Theme["Color Theme"], 0.6})
-            CreateTween({Frame, "Size", UDim2.new(1, 0, 0, SizeY), 0.6, true})
+            CreateTween({Arrow, "Rotation", 0, 0.3})
+            CreateTween({Arrow, "ImageColor3", Theme["Color Theme"], 0.3})
+            CreateTween({Frame, "Size", UDim2.new(1, 0, 0, SizeY), 0.3, true})
           else
-            CreateTween({Arrow, "Rotation", 180, 0.6})
-            CreateTween({Arrow, "ImageColor3", Theme["Color Stroke"], 0.6})
-            CreateTween({Frame, "Size", UDim2.new(1, 0, 0, 25), 0.6, true})
+            CreateTween({Arrow, "Rotation", 180, 0.3})
+            CreateTween({Arrow, "ImageColor3", Theme["Color Stroke"], 0.3})
+            CreateTween({Frame, "Size", UDim2.new(1, 0, 0, 25), 0.3, true})
           end
           Minimized = not Minimized
           WaitPress = false
@@ -1904,11 +1976,11 @@ function redzLib:MakeWindow(Configs)
       local PHText = Configs[3] or Configs.PlaceholderText or "< input >"
       local ClearOnFocus = Configs[4] or Configs.ClearText or false
       local Callback = Configs[5] or Configs.Callback or function()end
-      local Save = Configs[6] or Configs.Save or false
+      local Save = Configs[6] or Configs.Flag or false
       local TextBoxCallback = {}
       
-      if Save and typeof(Save) == "string" and FindTable(redzLib.Save.Flags, Save) then
-        Default = redzLib.Save.Flags[Save]
+      if Save and typeof(Save) == "string" and FindTable(Flags, Save) then
+        Default = Flags[Save]
       end
       
       local Frame = Button(Container, {
@@ -1919,7 +1991,7 @@ function redzLib:MakeWindow(Configs)
           Font = Theme["Font"][2],
           Text = TName,
           TextSize = 13,
-          Size = UDim2.new(1, -50, 1, 0),
+          Size = UDim2.new(0.5, 0, 1, 0),
           Position = UDim2.new(0, 15, 0, 0),
           BackgroundTransparency = 1,
           TextColor3 = Theme["Color Text"],
@@ -1960,8 +2032,7 @@ function redzLib:MakeWindow(Configs)
         end)
         task.spawn(Callback, NewText)
         if Save and typeof(Save) == "string" then
-          redzLib.Save.Flags[Save] = Default
-          SaveSenttigs("redz library V4.lua", redzLib.Save)
+          SaveFile(Save, Default)
         end
       end
       
@@ -2086,6 +2157,8 @@ function redzLib:MakeWindow(Configs)
     local ButtonProps = Configs[1] or Configs.Button or {}
     local UICorner = Configs[2] or Configs.UICorner or {true, {CornerRadius = UDim.new(0.5, 0)}}
     local UIStroke = Configs[3] or Configs.UIStroke or {false, {Color = Theme["Color Stroke"]}}
+    UICorner[2] = UICorner[2] or {}
+    UIStroke[2] = UIStroke[2] or {}
     
     local ButtonMinimize = SetProps(MakeDrag(Create("ImageButton", ScreenGui, {
       Size = UDim2.fromOffset(40, 40),
@@ -2103,10 +2176,12 @@ function redzLib:MakeWindow(Configs)
     
     local StrokeBTN, CornerBTN
     if UICorner[1] then
-      CornerBTN = SetProps(Create("UICorner", ButtonMinimize, UICorner[2]), UICorner[2])
+      CornerBTN = Create("UICorner", ButtonMinimize)
+      SetProps(CornerBTN, UICorner[2])
     end
     if UIStroke[1] then
-      StrokeBTN = SetProps(Create("UIStroke", ButtonMinimize, UIStroke[2]), UIStroke[2])
+      StrokeBTN = Create("UIStroke", ButtonMinimize)
+      SetProps(StrokeBTN, UIStroke[2])
     end
     
     local Minimize = {
