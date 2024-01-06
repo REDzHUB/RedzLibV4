@@ -13,8 +13,6 @@ local redzLib = {
     PlaceName = MarketplaceService:GetProductInfo(game.PlaceId).Name
   },
   Themes = loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/RedzLibV4/main/Themes.lua"))(),
-  SaveFlags = true,
-  SaveSettings = true,
   Flags = {},
   Save = {
     Theme = "Default",
@@ -498,16 +496,18 @@ function redzLib:MakeWindow(Configs)
   AnimFrame:Destroy()
   
   local function SaveFile(Name, Value)
-    if redzLib.SaveFlags and SaveCfg and typeof(SaveCfg) == "string" then
-      Flags[Name] = Value
-      
-      local encode = HttpService:JSONEncode(Flags)
-      writefile(SaveCfg, encode)
+    if writefile then
+      if SaveCfg and typeof(SaveCfg) == "string" then
+        Flags[Name] = Value
+        
+        local encode = HttpService:JSONEncode(Flags)
+        writefile(SaveCfg, encode)
+      end
     end
   end
   
   local function LoadFile()
-    if redzLib.SaveFlags and SaveCfg and typeof(SaveCfg) == "string" then
+    if SaveCfg and typeof(SaveCfg) == "string" then
       if readfile and isfile and isfile(SaveCfg) then
         local decode = HttpService:JSONDecode(readfile(SaveCfg))
         
