@@ -9,7 +9,7 @@ local Player = Players.LocalPlayer
 
 local redzLib = {
   info = {
-    Version = "v1.2.0",
+    Version = "v1.2.1",
     PlaceName = MarketplaceService:GetProductInfo(game.PlaceId).Name
   },
   Themes = loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/RedzLibV4/main/Themes.lua"))(),
@@ -462,6 +462,10 @@ function redzLib:MakeWindow(Configs)
   local DefaultTheme = Configs[4] or Configs.DefaultTheme or false
   local SaveCfg = Configs[5] or Configs.Flags or "redz Library v4 | Flags.lua"
   local Flags = redzLib.Flags
+  
+  if SaveCfg and typeof(SaveCfg) == "string" then
+    SaveCfg = string.gsub(SaveCfg, "/", "|")
+  end
   
   if DefaultTheme and typeof(DefaultTheme) == "string" and VerifyTheme(DefaultTheme) then
     redzLib:SetTheme(DefaultTheme)
@@ -1329,7 +1333,7 @@ function redzLib:MakeWindow(Configs)
         
         local SliderPos = (NewValue - Min) / (Max - Min)
         
-        SliderIcon.Position = UDim2.fromScale(math.clamp(SliderPos, 0, 1), 0.5)
+        CreateTween({SliderIcon, "Position", UDim2.fromScale(math.clamp(SliderPos, 0, 1), 0.5), 0.3})
 			end SetSlider(Default)
 			
       local Slider = {}
