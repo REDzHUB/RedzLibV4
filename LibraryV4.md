@@ -13,6 +13,12 @@ Library:SetTransparency(0.1) -- 0, 1
 Library:GetThemes() -- void, return = table
 
 Library:GetIcon("Icon Name")
+
+-- ///////// 
+
+Library.info.PlaceName
+
+Library.info.Version
 ```
 
 ## Global Functions
@@ -25,10 +31,15 @@ Instance:Visible(false)
 ## Window
 Create a Window
 ```lua
-local Window = Library:MakeWindow({"redz Library"})
+local Window = redzlib:MakeWindow({
+  Title = "REDz HUB : Example",
+  SubTitle = "by : redz9999",
+  LoadText = "redz Hub",
+  Flags = "redz Hub | Example.lua"
+})
 
 --[[
-  Window:Set("New Title")
+  Window:Set("New Title or Image")
 ]]
 ```
 
@@ -191,5 +202,22 @@ Tab:AddDiscordInvite({
   DiscordTitle = "REDz Hub | Community",
   DiscordIcon = "rbxassetid://15298567397",
   DiscordLink = "https://discord.gg/7aR7kNVt4g"
+})
+```
+
+Create a Minimize Button
+```lua
+Window:AddMinimizeButton({
+  Button = {
+    -- Button Properties
+    Image = "rbxassetid://15298567397"
+  },
+  UICorner = {true,
+    -- Corner Properties
+    CornerRadius = UDim.new(0.5, 0)
+  },
+  UIStroke = {false, {
+    -- Stroke Properties
+  }}
 })
 ```
