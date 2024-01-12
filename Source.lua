@@ -1064,7 +1064,7 @@ function redzLib:MakeWindow(Configs)
     end
     function Tab:AddButton(Configs)
       local BName = Configs[1] or Configs.Name or "Button"
-      local Callback = Configs[3] or Configs.Callback or function()end
+      local Callback = Configs[2] or Configs.Callback or function()end
       
       local Frame = Button(Container, {Size = UDim2.new(1, 0, 0, 25), AutomaticSize = "Y"})
       local Text = insertTheme(Create("TextLabel", Frame, {
