@@ -9,7 +9,7 @@ local Player = Players.LocalPlayer
 
 local redzLib = {
   info = {
-    Version = "v1.2.1",
+    Version = "v1.2.2",
     PlaceName = MarketplaceService:GetProductInfo(game.PlaceId).Name
   },
   Themes = loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/RedzLibV4/main/Themes.lua"))(),
@@ -248,7 +248,7 @@ task.spawn(function()
   
   function redzLib:MakeNotify(Configs)
     local NTitle = Configs[1] or Configs.Title or "Notification"
-    local NText = Configs[2] or Configs.Text or "This is a notification teste teste teste teste t3ste teste teste teste teste teste teste teste teste teste"
+    local NText = Configs[2] or Configs.Text or "This is a notification"
     local NTime = Configs[3] or Configs.Time or 5
     
     local NFrame = Create("Frame", NotifyContainer, {
@@ -326,7 +326,7 @@ task.spawn(function()
     
     local NotifyFinish, destroy
     
-    CloseNotify.MouseButton1Click:Connect(function()
+    CloseNotify.Activated:Connect(function()
       if not destroy and not NotifyFinish and NFrame then
         NotifyFinish = true
         CreateTween({RealNFrame, "Position", UDim2.new(0, -50), 0.15, true})
@@ -610,7 +610,7 @@ function redzLib:MakeWindow(Configs)
     Position = UDim2.fromScale(0.5, 0.5)
   }, {
     Corner()
-  }), "MouseButton1Click", function(DialogBackground)
+  }), "Activated", function(DialogBackground)
     CreateTween({DialogBackground, "Size", UDim2.new(), 0.2, true})
     DialogBackground.Visible = false
   end), "Stroke")
@@ -683,7 +683,7 @@ function redzLib:MakeWindow(Configs)
     TextColor3 = Theme["Color Text"],
     AutoButtonColor = false,
     TextYAlignment = "Bottom"
-  }), "MouseButton1Click", function(Instance)
+  }), "Activated", function(Instance)
     if not WaitMinimize then
       WaitMinimize = true
       Minimized = not Minimized
@@ -728,7 +728,7 @@ function redzLib:MakeWindow(Configs)
   
   local IsFirst
   local Window = {Dialog = {}}
-  CloseBTN["MouseButton1Click"]:Connect(function()
+  CloseBTN["Activated"]:Connect(function()
     if not WaitMinimize then
       WaitMinimize = true
       Window.Dialog:Create({
@@ -774,13 +774,13 @@ function redzLib:MakeWindow(Configs)
     DialogCancel.Text = Dialog.Cancel.Text
     DialogConfirm.Text = Dialog.Confirm.Text
     
-    connect1 = DialogCancel.MouseButton1Click:Connect(function()disconnect()
+    connect1 = DialogCancel.Activated:Connect(function()disconnect()
       task.spawn(Dialog.Cancel.Callback)
       CreateTween({DialogBackground, "Size", UDim2.new(), 0.3, true})
       DialogBackground.Visible = false
     end)
     
-    connect2 = DialogConfirm.MouseButton1Click:Connect(function()disconnect()
+    connect2 = DialogConfirm.Activated:Connect(function()disconnect()
       task.spawn(Dialog.Confirm.Callback)
       CreateTween({DialogBackground, "Size", UDim2.new(), 0.3, true})
       DialogBackground.Visible = false
@@ -870,7 +870,7 @@ function redzLib:MakeWindow(Configs)
       ImageColor3 = Theme["Color Text"]
     }), "Text")
     
-    FrameC.MouseButton1Click:Connect(function()
+    FrameC.Activated:Connect(function()
       for _,instance in pairs(Containers:GetChildren()) do
         if instance ~= Container and instance:IsA(Container.ClassName) then
           instance.Visible = false
@@ -1007,46 +1007,45 @@ function redzLib:MakeWindow(Configs)
     end
     function Tab:AddParagraph(Configs)
       local ParagraphName1 = Configs[1] or Configs.Name or "Paragraph!!"
-      local ParagraphName2 = Configs[2] or Configs.Text or "Paragraph!!"
+      local ParagraphName2 = Configs[2] or Configs.Text or "This is a Paragraph"
       
       local Frame = Button(Container, {
-        Size = UDim2.new(1, 0, 0, 25),
+        Size = UDim2.new(1, 0, 0, 0),
         AutomaticSize = "Y"
       }, {
-        Corner(),
-        Create("UIListLayout"),
-        Create("UIPadding", {
-          PaddingLeft = UDim.new(0, 15),
-          PaddingRight = UDim.new(0, 10),
-          PaddingTop = UDim.new(0, 5),
-          PaddingBottom = UDim.new(0, 5)
-        })
+        Corner()
       })
       
       local TextLabel1 = Create("TextLabel", Frame, {
         TextSize = 13,
         TextColor3 = Theme["Color Text"],
         Text = ParagraphName1,
-        Size = UDim2.new(1, 0, 0, 0),
-        AutomaticSize = "Y",
+        Size = UDim2.new(1, -25, 0, 18),
+        Position = UDim2.new(0, 15, 0, 5),
         BackgroundTransparency = 1,
         TextXAlignment = "Left",
         TextYAlignment = "Top",
         Font = Theme["Font"][2],
-        TextWrapped = true
+        TextTruncate = "AtEnd"
       })
       
       local TextLabel2 = Create("TextLabel", Frame, {
-        Size = UDim2.new(1, 0, 0, 0),
+        Size = UDim2.fromScale(1, -25),
+        Position = UDim2.fromOffset(15, 18),
         BackgroundTransparency = 1,
         AutomaticSize = "Y",
         TextXAlignment = "Left",
-        TextYAlignment = "Top",
         TextColor3 = Theme["Color Dark Text"],
         TextSize = 11,
         Text = ParagraphName2,
         Font = Theme["Font"][3],
         TextWrapped = true
+      }, {
+        Create("Frame", {
+          Transparency = 1,
+          Size = UDim2.fromOffset(0, 8),
+          Position = UDim2.fromScale(0, 1)
+        })
       })
       
       local Paragraph = {}
@@ -1089,7 +1088,7 @@ function redzLib:MakeWindow(Configs)
       }), "Stroke")
       
       local WaitClick
-      Frame.MouseButton1Click:Connect(function()
+      Frame.Activated:Connect(function()
         task.spawn(Callback, "Click")
         if not WaitClick then
           WaitClick = true
@@ -1103,7 +1102,7 @@ function redzLib:MakeWindow(Configs)
       
       local Button = {}
       function Button:Callback(func)
-        Frame.MouseButton1Click:Connect(function()
+        Frame.Activated:Connect(function()
           task.spawn(func, "Click")
         end)
       end
@@ -1120,6 +1119,7 @@ function redzLib:MakeWindow(Configs)
       local Default = Configs[2] or Configs.Default or false
       local Callback = Configs[3] or Configs.Callback or function()end
       local Flag = Configs[4] or Configs.Flag or false
+      
       local ToggleCallback, ToggleTable = {}, {}
       function ToggleTable:GetToggle()return Default end
       if Flag and typeof(Flag) == "string" and FindTable(Flags, Flag) then Default = Flags[Flag]end
@@ -1189,13 +1189,13 @@ function redzLib:MakeWindow(Configs)
         end
       end;task.spawn(SetToggle, Default, true)
       
-      Frame.MouseButton1Click:Connect(function()
+      Frame.Activated:Connect(function()
         SetToggle(not Default)
       end)
       
       local Toggle = {}
       function Toggle:Callback(func)
-        Frame.MouseButton1Click:Connect(function()
+        Frame.Activated:Connect(function()
           if not TweenWait then
             task.spawn(func, not NewVal)
           end
@@ -1578,7 +1578,7 @@ function redzLib:MakeWindow(Configs)
         end
       end)
       
-      Frame.MouseButton1Click:Connect(function()
+      Frame.Activated:Connect(function()
         if not WaitClick then
           WaitClick = true
           if not Minimized then
@@ -1812,7 +1812,7 @@ function redzLib:MakeWindow(Configs)
             task.spawn(Callback, name)
           end
           
-          Frame.MouseButton1Click:Connect(function()
+          Frame.Activated:Connect(function()
             for _,option in pairs(ContainerList:GetChildren()) do
               if option ~= Frame and option:IsA("TextButton") then
                 CreateTween({option.Frame, "BackgroundTransparency", 0.8, 0.2})
@@ -1875,7 +1875,7 @@ function redzLib:MakeWindow(Configs)
             SetLabelTable()
           end
           
-          Frame.MouseButton1Click:Connect(function()
+          Frame.Activated:Connect(function()
             OnOff = not OnOff
             if OnOff then
               CreateTween({Selected, "BackgroundTransparency", 0, 0.2})
@@ -1930,7 +1930,7 @@ function redzLib:MakeWindow(Configs)
       end
       
       local Minimized, WaitPress
-      Frame.MouseButton1Click:Connect(function()
+      Frame.Activated:Connect(function()
         if not WaitPress then
           local SizeY
           if GetNumber() >= 1 then
@@ -2122,7 +2122,7 @@ function redzLib:MakeWindow(Configs)
       })
       
       local JoinClick
-      JoinButton.MouseButton1Click:Connect(function()
+      JoinButton.Activated:Connect(function()
         setclipboard(DiscordLink)
         if not JoinClick then
           JoinClick = true
@@ -2168,7 +2168,7 @@ function redzLib:MakeWindow(Configs)
     })), ButtonProps)
     
     local MinimizeBool
-    ButtonMinimize.MouseButton1Click:Connect(function()
+    ButtonMinimize.Activated:Connect(function()
       MainFrame.Visible = MinimizeBool
       MinimizeBool = not MinimizeBool
     end)
